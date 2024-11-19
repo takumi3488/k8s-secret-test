@@ -1,0 +1,13 @@
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - docker rmi -f example.com/hello-world:latest
+      - kubectl delete -f secret.yaml
+      - kubectl delete -f job.yaml
+      - docker build . -t example.com/hello-world:latest
+      - kubectl apply -f secret.yaml
+      - kubectl apply -f job.yaml
+      - sleep 5
+      - kubectl logs job/hello-world-job
